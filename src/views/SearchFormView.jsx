@@ -1,15 +1,15 @@
 import { defineComponent } from "vue"
 
-const IngredientSelectorView = defineComponent({
+const SearchFormView = defineComponent({
   props: {
     toggleIngredient: {
       type: Function,
-    },
+    }
   },
   
   setup(props) {
     function toggle(e) {
-        toggleIngredient(e.target.id);
+        props.toggleIngredient(e.target.id);
     }
 
     return function render() {
@@ -19,10 +19,11 @@ const IngredientSelectorView = defineComponent({
           <span class="ingredient" id="Eggplant" onClick={toggle}>Eggplant &#127814;</span>
           <span class="ingredient" id="Bread" onClick={toggle}>Bread &#127838;</span>
           <span class="ingredient" id="Potatoes" onClick={toggle}>Potatoes &#129364;</span>
+          <button>Create recipe</button>
         </div>
       );
     };
   },
 });
 
-export default IngredientSelectorView
+export default SearchFormView
