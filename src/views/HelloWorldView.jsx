@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 
-const HelloWorld = defineComponent({
+const HelloWorldView = defineComponent({
   props: {
     msg: {
       type: String,
@@ -18,4 +18,4 @@ const HelloWorld = defineComponent({
   },
 });
 
-export default HelloWorld
+export default HelloWorldView
