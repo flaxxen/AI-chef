@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './views/HelloWorldView.jsx'
+import Menu from './components/MenuPresenter';
+import router from './router';
 
 const App = defineComponent({
     render() {
@@ -8,9 +9,7 @@ const App = defineComponent({
             <div>
                 <header>
                     <div class="wrapper">
-                    <nav>
-                        <RouterLink to="/">Home</RouterLink>
-                    </nav>
+                    <Menu menuItems={router.getRoutes()}/>
                     </div>
                 </header>
                 <RouterView />
