@@ -1,21 +1,24 @@
 import { defineComponent } from "vue"
-import SearchFormView from "../views/SearchFormView"
+import MenuView from "../views/MenuView";
 
-const SearchFormPresenter = defineComponent({
+const Menu = defineComponent({
   
-
+  props: {
+    menuItems: Array
+  },
 
   setup(props) {
+    
     function print(e) {
         console.log(e);
     }
 
     return function renderACB() {
       return (
-        <SearchFormView toggleIngredient={ print }/>
+        <MenuView menuItems={ props.menuItems }/>
       );
     };
   },
 });
 
-export default SearchFormPresenter
+export default Menu
