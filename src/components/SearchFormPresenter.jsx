@@ -1,18 +1,32 @@
 import { defineComponent } from "vue"
 import SearchFormView from "../views/SearchFormView"
+import { allIngredients } from '../model.js'
 
 const SearchFormPresenter = defineComponent({
-  
+  props: {
+    model: { 
+      type: Object,
+    },
+    search: {
+      type: Function,
+    } 
+  },
 
-
-  setup(props) {
-    function print(e) {
-        console.log(e);
+  setup( props ) {
+    function toggleIngredient( ingredient ) {
+        props.model.toggleIngredient( ingredient );
     }
 
-    return function renderACB() {
+    function search() {
+      props.search();
+    }
+
+    return function render() {
       return (
-        <SearchFormView toggleIngredient={ print }/>
+        <SearchFormView 
+          activeIngredients={ Object.keys( props.model.ingredients ) }
+          search={ search } 
+          toggleIngredient={ toggleIngredient }/>
       );
     };
   },

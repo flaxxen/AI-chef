@@ -8,15 +8,14 @@ const MenuView = defineComponent({
     },
   },
   
-  setup(props) {
+  setup( props ) {
     function getLinks() {
-      console.log("Hello");
       return props.menuItems.map( 
           item => <RouterLink to={ item.path }>{ item.name } </RouterLink>
         );
     }
 
-    return function renderACB() {
+    return function render() {
       return (
         <div>
           { getLinks() } 
