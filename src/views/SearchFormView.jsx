@@ -1,25 +1,37 @@
 import { defineComponent } from "vue"
+import { allIngredients } from "../model.js";
+
 
 const SearchFormView = defineComponent({
   props: {
     toggleIngredient: {
       type: Function,
+    },
+    search: {
+      type: Function
+    },
+    activeIngredients: {
+      type: Array
     }
   },
   
-  setup(props) {
+  setup( props ) {
     function toggle(e) {
-        props.toggleIngredient(e.target.id);
+      console.log(e.target.id);
+      props.toggleIngredient(e.target.id);
     }
 
+    function renderIngredients() {
+      return Object.entries(allIngredients).map( ( [ key, value ] ) => 
+        <span class="ingredient" id={ key } onClick={ toggle }>{ key } { String.fromCodePoint(value) }</span>
+      )
+    }
+    
     return function render() {
       return (
         <div>
-          <span class="ingredient" id="Tomatoes" onClick={toggle}>Tomatoes &#127813;</span>
-          <span class="ingredient" id="Eggplant" onClick={toggle}>Eggplant &#127814;</span>
-          <span class="ingredient" id="Bread" onClick={toggle}>Bread &#127838;</span>
-          <span class="ingredient" id="Potatoes" onClick={toggle}>Potatoes &#129364;</span>
-          <button>Create recipe</button>
+          { renderIngredients() }
+          <button onClick={ props.search }>Create recipe</button>
         </div>
       );
     };
