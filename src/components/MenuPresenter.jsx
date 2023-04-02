@@ -8,11 +8,6 @@ const Menu = defineComponent({
   },
 
   setup(props) {
-    
-    function print(e) {
-        console.log(e);
-    }
-
     return function renderACB() {
       return (
         <MenuView menuItems={ props.menuItems }/>
