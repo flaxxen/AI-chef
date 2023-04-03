@@ -1,5 +1,5 @@
 <script setup>
-import Login from "@/components/Login.vue";
+import LoginPresenter from "@/components/LoginPresenter.vue";
 </script>
 
 <template>
