@@ -1,12 +1,12 @@
 <template>
-  <h1 class="h1">Sign up</h1>
+  <h1 class="Signh1">Sign up</h1>
   <div class="signup">
     <input type="text" v-model="name" placeholder="Enter Name" class="input"/>
     <input type="text" v-model="email" placeholder="Enter E-mail" class="input"/>
     <input type="password" v-model="password" placeholder="Enter Password" class="input"/>
     <button v-on:click="SignUp" class="button">Sign Up</button>
     <p>
-      <RouterLink to="/login" class="login">Login</RouterLink>
+      <RouterLink to="/login" class="login">LoginPresenter</RouterLink>
 
     </p>
   </div>
@@ -22,7 +22,7 @@ export default {
 <style>
 
 
-.h1{
+.Signh1{
   margin-bottom: 20px;
   color: #00BD7E;
 }

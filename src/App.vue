@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import Login from "@/components/Login.vue";
-import SignUp from "@/components/SignUp.vue";
+import LoginPresenter from "@/components/LoginPresenter.vue";
+import SignUpPresenter from "@/components/SignUpPresenter.vue";
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import SignUp from "@/components/SignUp.vue";
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login" >Login</RouterLink>
+        <RouterLink to="/login" >LoginPresenter</RouterLink>
       </nav>
 
     </div>
