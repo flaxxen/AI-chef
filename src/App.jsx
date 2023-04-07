@@ -10,8 +10,10 @@ const App = defineComponent({
             <div>
                 <header>
                     <div class="wrapper">
-                    <Menu menuItems={router.getRoutes()}/>
-                        <RouterLink to="/Login">Login</RouterLink>
+                    {/* <Menu menuItems={router.getRoutes()}/> */}
+                        <RouterLink to="/Login" style="padding: 0 10px;">Login</RouterLink>
+                        <RouterLink to="/Home" style="padding: 0 10px;">Home</RouterLink>
+                        <RouterLink to="/Favorite" style="padding: 0 10px;">Favorite</RouterLink>
                     </div>
 
                 </header>
