@@ -1,27 +1,31 @@
-import {defineComponent} from "vue";
+import { defineComponent, ref } from "vue";
 import { RouterLink } from "vue-router";
-const LoginView = defineComponent( {
-    props: {
+import "/src/assets/login.css";
 
-    },
-    setup(props){
+const LoginView = defineComponent({
+    props: {},
+    setup(props) {
+        const email = ref("");
+        const password = ref("");
 
-        return function render(){
+        function LoginPresenter() {
+
+        }
+
+        return function render() {
             return (
                 <div>
-                    <h1 className="h1">Here you can login</h1>
-
+                    <h1 className="h1">Login</h1>
                     <div className="login">
-                        <input type="text" v-model="email" placeholder="Enter E-mail" className="input"/>
-                        <input type="password" v-model="password" placeholder="Enter Password" className="input"/>
-                        <button v-on:click="LoginPresenter" className="button">LoginPresenter</button>
-
-                        <RouterLink to="signup" class="sign">Sign up</RouterLink>
+                        <input type="text" value={email.value} onInput={(x) => email.value = x.target.value} placeholder="Enter E-mail" className="input"/>
+                        <input type="password" value={password.value} onInput={(x) => password.value = x.target.value} placeholder="Enter Password" className="input"/>
+                        <button onClick={LoginPresenter} className="button">Login</button>
+                        <RouterLink to="signup" class="sign">SignUp</RouterLink>
                     </div>
-
-                </div>);
+                </div>
+            );
         };
-
     },
 });
+
 export default LoginView;

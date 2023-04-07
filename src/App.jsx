@@ -11,7 +11,9 @@ const App = defineComponent({
                 <header>
                     <div class="wrapper">
                     <Menu menuItems={router.getRoutes()}/>
+                        <RouterLink to="/Login">Login</RouterLink>
                     </div>
+
                 </header>
                 <RouterView model={ new SearchModel() } />
             </div>
