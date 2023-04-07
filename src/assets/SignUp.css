@@ -1,6 +1,7 @@
-.Signh1{
+.h1{
     margin-bottom: 20px;
     color: #00BD7E;
+    text-align: center;
 }
 
 .signup {
@@ -16,6 +17,8 @@
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
+    max-width: 300px;
+
 }
 
 .button {
