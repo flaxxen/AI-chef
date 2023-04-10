@@ -1,22 +1,42 @@
 @import './base.css';
 
 #app {
-
+  display: flex; 
+  justify-content: center;
 }
 
-
-@media (hover: hover) {
- 
+.container {
+  width: 700px;
+  display: flex; 
+  justify-content: center;
 }
 
-@media (min-width: 1024px) {
-
+.searchForm {
+  display: flex;
 }
 
-.ingredient {
-  border: 2px solid red;
-  border-radius: 5px;
+.ingredientOn {
+  display: flex;
+  border-radius: 20px;
+  width: 100px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(60, 60, 60, 0.64);
+  margin-top:3px;
+  margin-bottom:3px;
+  margin-left:3px;
+  margin-right:3px;
+}
+
+.ingredientOff {
+  display: flex;
+  border-radius: 20px;
+  width: 100px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(240, 229, 229, 0.64);
   margin-top:3px;
   margin-bottom:3px;
   margin-left:3px;
@@ -26,7 +46,7 @@
 .recipeCard {
   width: 200px;
   height: 120px;
-  border: 2px solid red;
+  border: 6px solid red;
   border-radius: 5px;
   
 }

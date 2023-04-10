@@ -23,13 +23,13 @@ const SearchFormView = defineComponent({
 
     function renderIngredients() {
       return Object.entries(allIngredients).map( ( [ key, value ] ) => 
-        <span class="ingredient" id={ key } onClick={ toggle }>{ key } { String.fromCodePoint(value) }</span>
+        <div class={props.activeIngredients.includes(key) ? "ingredientOn" : "ingredientOff"} id={ key } onClick={ toggle }>{ key } { String.fromCodePoint(value) }</div>
       )
     }
     
     return function render() {
       return (
-        <div>
+        <div class="searchForm">
           { renderIngredients() }
           <button onClick={ props.search }>Create recipe</button>
         </div>

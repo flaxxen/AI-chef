@@ -1,28 +1,2 @@
 /* color palette from <https://github.com/vuejs/theme> */
 
-.ingredient {
-  border: 2px solid red;
-  border-radius: 5px;
-  background-color: rgba(60, 60, 60, 0.64);
-  margin-top:3px;
-  margin-bottom:3px;
-  margin-left:3px;
-  margin-right:3px;
-}
-
-.recipeCard {
-  width: 200px;
-  height: 120px;
-  border: 2px solid red;
-  border-radius: 5px;
-  
-}
-
-div.recipeCard:hover {
-  size-adjust: 110%;
-  background-color: rgb(126, 52, 9);
-}
-
-.block {
-  background-color: rgb(125, 125, 125);
-}
