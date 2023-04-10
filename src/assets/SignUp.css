@@ -1,0 +1,37 @@
+.h1{
+    margin-bottom: 20px;
+    color: #00BD7E;
+    text-align: center;
+}
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 300px;
+
+}
+
+.button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 7px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login {
+    color: dodgerblue;
+    margin-top: 15px;
+}
