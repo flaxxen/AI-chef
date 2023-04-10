@@ -1,6 +1,5 @@
 import { defineComponent } from "vue"
 import SearchFormView from "../views/SearchFormView"
-import { allIngredients } from '../model.js'
 
 const SearchFormPresenter = defineComponent({
   props: {

@@ -7,7 +7,8 @@ import SearchModel from './model.js'
 const App = defineComponent({
     render() {
         return (
-            <div>
+            <div class="container">
+                <div class="mainContent">
                 <header>
                     <div class="wrapper">
                     {/* <Menu menuItems={router.getRoutes()}/> */}
@@ -18,6 +19,7 @@ const App = defineComponent({
 
                 </header>
                 <RouterView model={ new SearchModel() } />
+                </div>
             </div>
         )
     }
