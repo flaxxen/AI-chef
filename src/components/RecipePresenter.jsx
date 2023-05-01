@@ -12,7 +12,7 @@ const Recipe = defineComponent({
   setup( props ) {
     return function render() {
       return (
-        ( props.model.recipe ? <RecipeView recipe={ props.model.recipe }/> : <div>Nothing</div>)
+        <RecipeView model={ props.model }/> 
       );
     };
   },
