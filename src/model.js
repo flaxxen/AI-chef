@@ -4,6 +4,7 @@ class SearchModel {
   constructor() {
     this.ingredients = {};
     this.recipe = null;
+    this.searching = false;
   };
 
   toggleIngredient( ingredient ) {
