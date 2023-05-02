@@ -2,15 +2,30 @@ import { defineComponent, ref } from "vue";
 import { RouterLink } from "vue-router";
 import "/src/assets/login.css";
 
+
+
 const LoginView = defineComponent({
-    props: {},
+    props: {
+        email: {
+            type: String,
+        },
+        password: {
+            type: String,
+        },
+        onLogin: {
+            type: Function,
+        },
+    },
+
+
+
     setup(props) {
         const email = ref("");
         const password = ref("");
 
-        function LoginPresenter() {
-
-        }
+        const handleLogin = () => {
+            props.onLogin(email.value, password.value);
+        };
 
         return function render() {
             return (
@@ -19,8 +34,9 @@ const LoginView = defineComponent({
                     <div className="login">
                         <input type="text" value={email.value} onInput={(x) => email.value = x.target.value} placeholder="Enter E-mail" className="input"/>
                         <input type="password" value={password.value} onInput={(x) => password.value = x.target.value} placeholder="Enter Password" className="input"/>
-                        <button onClick={LoginPresenter} className="button">Login</button>
+                        <button onClick={handleLogin} className="button">Login</button>
                         <RouterLink to="signup" class="sign">SignUp</RouterLink>
+
                     </div>
                 </div>
             );
