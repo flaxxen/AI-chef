@@ -23,7 +23,7 @@ const Favorite = defineComponent({
           instructions: "instructions for dish3"
         }
       ];
-    // return () => <FavoriteView favoriteRecipes={favoriteRecipes} />;
+    
     return function render() {
       return <FavoriteView favoriteRecipes={favoriteRecipes} />;
     };
