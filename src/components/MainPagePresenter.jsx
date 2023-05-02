@@ -13,10 +13,11 @@ const MainPage = defineComponent({
     const model = reactive( props.model );
 
     function searchForRecipe() {
+      model.searching = true;
       const recipePromise = generateRecipe( Object.keys(model.ingredients) );
 
       Promise.resolve(recipePromise)
-      .then( (value) => {model.recipe = new RecipeModel(value) } )
+      .then( (value) => {model.recipe = new RecipeModel(value); model.searching = false; } )
       .catch( (error) => console.log( error ) ); 
     }
 
