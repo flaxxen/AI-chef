@@ -1,4 +1,6 @@
 import { defineComponent, reactive } from 'vue';
+import { getDatabase, ref, remove } from 'firebase/database';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const FavoriteView = defineComponent({
     props: {
@@ -23,7 +25,7 @@ const FavoriteView = defineComponent({
     methods: {
         search() {
             this.searchResults = [];
-            for (const recipe of this.favoriteRecipes) {
+            for (const recipe of this.favoriteRecipes.value) {
                 if (recipe.title.includes(this.searchText)) {
                     this.searchResults.push(recipe);
                 }
@@ -31,23 +33,43 @@ const FavoriteView = defineComponent({
         },
 
         removeSearchRecipe(recipeId) {
-            const index = this.favoriteRecipes.findIndex(recipe => recipe.id === recipeId);
+            
+            const index = this.favoriteRecipes.value.findIndex(recipe => recipe.id === recipeId);
             console.log(`Removing recipe with ID ${recipeId}`);
             console.log(this.favoriteRecipes);
             this.reactiveFavorites.splice(index, 1);
             console.log(`Removed recipe with ID ${recipeId}`);
             console.log(this.favoriteRecipes);
+
+            const auth = getAuth();
+            const db = getDatabase();
+            const recipeRef = ref(db, `users/${auth.currentUser.uid}/favorites/${recipeId}`);
+            remove(recipeRef).then(() => {
+                console.log(`Removed recipe with ID ${recipeId} from Firebase Realtime Database`);
+            }).catch((error) => {
+                console.error(`Error removing recipe with ID ${recipeId} from Firebase Realtime Database: ${error}`);
+            });
+
             this.search();
         },
 
         removeRecipe(recipeId) {
-            const index = this.favoriteRecipes.findIndex(recipe => recipe.id === recipeId);
+            const index = this.favoriteRecipes.value.findIndex(recipe => recipe.id === recipeId);
             console.log(`Removing recipe with ID ${recipeId}`);
             console.log(this.favoriteRecipes);
             this.reactiveFavorites.splice(index, 1);
             console.log(`Removed recipe with ID ${recipeId}`);
             console.log(this.favoriteRecipes);
             //this.search();
+
+            const auth = getAuth();
+            const db = getDatabase();
+            const recipeRef = ref(db, `users/${auth.currentUser.uid}/favorites/${recipeId}`);
+            remove(recipeRef).then(() => {
+                console.log(`Removed recipe with ID ${recipeId} from Firebase Realtime Database`);
+            }).catch((error) => {
+                console.error(`Error removing recipe with ID ${recipeId} from Firebase Realtime Database: ${error}`);
+            });
         }
     },
 
@@ -65,9 +87,9 @@ const FavoriteView = defineComponent({
                         {this.searchResults.map((recipe) => (
                             <li key={recipe.id}>
                                 <div>
-                                    <div>Title: {recipe.title}</div>
-                                    <div>Ingredients: {recipe.ingredients}</div>
-                                    <div>Instructions: {recipe.instructions}</div>
+                                    <div><h3>Title:</h3> {recipe.title}</div>
+                                    <div><h3>Ingredients:</h3> {recipe.ingredients}</div>
+                                    <div><h3>Instructions:</h3> {recipe.instructions}</div>
                                     <button onClick={() => this.removeSearchRecipe(recipe.id)}>Delete</button>
                                 </div>
                             </li>
@@ -81,9 +103,9 @@ const FavoriteView = defineComponent({
                 <ul>
                     {this.reactiveFavorites.map(recipe => (
                         <li key={recipe.id}>
-                            <div>Title: {recipe.title}</div>
-                            <div>Ingredients: {recipe.ingredients}</div>
-                            <div>Instructions: {recipe.instructions}</div>
+                            <div><h3>Title:</h3> {recipe.title}</div>
+                            <div><h3>Ingredients:</h3> {recipe.ingredients}</div>
+                            <div><h3>Instructions:</h3> {recipe.instructions}</div>
                             <button onClick={() => this.removeRecipe(recipe.id)}>Delete</button>
                         </li>
                     ))}

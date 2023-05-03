@@ -1,31 +1,52 @@
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import FavoriteView from '../views/FavoriteView';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref as dbRef, onValue } from "firebase/database";
 
 const Favorite = defineComponent({
   setup() {
-    const favoriteRecipes = [ // just a default setting for now, should get favorite recipes from firebase
-        {
-          id: 1,
-          title: "dish1",
-          ingredients: "A, B, C",
-          instructions: "instructions for dish1"
-        },
-        {
-          id: 2,
-          title: "dish2",
-          ingredients: "D, E, F",
-          instructions: "instructions for dish2"
-        },
-        {
-          id: 3,
-          title: "dish3",
-          ingredients: "G, H, I",
-          instructions: "instructions for dish3"
-        }
-      ];
-    
+    const auth = getAuth();
+    const database = getDatabase();
+    const user = ref(null);
+    const favoriteRecipes = ref([]);
+    const isAuthenticated = ref(null);
+    onAuthStateChanged(auth, (userAuth) => {
+      isAuthenticated.value = !!userAuth
+      user.value = userAuth;
+      if (userAuth) {
+        const favoriteRef = dbRef(database, `users/${userAuth.uid}/favorites`);
+        onValue(favoriteRef, (snapshot) => {
+          const favorites = [];
+          snapshot.forEach((recipe) => {
+            favorites.push({
+              id: recipe.key,
+              title: recipe.val().title,
+              ingredients: recipe.val().ingredients,
+              instructions: recipe.val().instructions
+            });
+          });
+          favoriteRecipes.value = favorites;
+        });
+      } else {
+        favoriteRecipes.value = [];
+      }
+    });
+
+
     return function render() {
-      return <FavoriteView favoriteRecipes={favoriteRecipes} />;
+      if (isAuthenticated.value === null){
+        return null;
+      }
+      else if (!isAuthenticated.value) {
+        return (
+          <div>
+            <p>You need to <router-link to="/login">log in</router-link> first.</p>
+          </div>
+        );
+      }
+      else {
+        return <FavoriteView favoriteRecipes={favoriteRecipes} />;
+      }
     };
   },
 });
