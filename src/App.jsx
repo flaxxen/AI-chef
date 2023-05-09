@@ -32,11 +32,12 @@ import { RouterLink, RouterView } from 'vue-router'
 import Menu from './components/MenuPresenter';
 import router from './router';
 import SearchModel from './model.js'
-
+import Navbar from './views/Navbar.jsx';
 const App = defineComponent({
     render() {
         return (
             <div class="container">
+                <Navbar />
                 <div class="mainContent">
                 <header>
                     <div class="wrapper">

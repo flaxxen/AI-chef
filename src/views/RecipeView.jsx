@@ -2,7 +2,7 @@ import { defineComponent, ref } from "vue"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { getDatabase, ref as dbRef, push, set } from "firebase/database";
 import { useRouter } from 'vue-router'
-
+import '/src/assets/recipe.css'; // import the css file
 
 const RecipeView = defineComponent({
   props: {

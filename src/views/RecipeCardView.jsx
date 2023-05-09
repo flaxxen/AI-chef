@@ -1,5 +1,4 @@
 import { defineComponent } from "vue"
-
 const RecipeCardView = defineComponent({
   
   props: {
