@@ -1,7 +1,7 @@
 import { defineComponent, ref } from "vue";
 import { RouterLink } from "vue-router";
-import "/src/assets/login.css";
-
+import '/src/assets/login.css';
+import AIchef from '/src/assets/AIchef.png';
 
 
 const LoginView = defineComponent({
@@ -30,6 +30,7 @@ const LoginView = defineComponent({
         return function render() {
             return (
                 <div>
+                    <img src={AIchef} alt="AI Chef" />
                     <h1 className="h1">Login</h1>
                     <div className="login">
                         <input type="text" value={email.value} onInput={(x) => email.value = x.target.value} placeholder="Enter E-mail" className="input"/>
