@@ -9,6 +9,9 @@
     flex-direction: column;
     align-items: center;
 }
+.signError {
+    color: red;
+}
 
 .input {
     margin-bottom: 10px;

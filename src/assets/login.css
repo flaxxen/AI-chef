@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.loginError {
+    color: red;
+}
+
 .input {
     margin-bottom: 10px;
     padding: 10px;

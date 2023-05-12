@@ -1,6 +1,6 @@
 import { defineComponent, ref } from "vue"
 import SignUpView from "../views/SignUpView";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
 import { getDatabase, ref as dbRef, set } from "firebase/database";
 
 
@@ -11,9 +11,10 @@ const SignUpPresenter = defineComponent({
 
         const auth = getAuth();
         const database = getDatabase();
+        const errorMessage = ref("");
 
         const handleSignUp = (name, email, password) => {
-            // Handle sign-up logic here
+
 
             createUserWithEmailAndPassword(auth,email, password)
                 .then((userCredential) => {
@@ -28,9 +29,44 @@ const SignUpPresenter = defineComponent({
                         name,
                         email
                     });
+
+
+                    sendEmailVerification(user)
+                        .then(() => {
+
+                        })
+                        .catch((error) => {
+
+                        });
+
+
+
+
+
+                    auth.signOut();
+                    errorMessage.value = "A verification link has been sent to your email";
+
+                    name.value = '';
+                    email.value = '';
+                    password.value = '';
+
+
                 })
                 .catch((error) => {
-                    // Handle errors here
+
+                    if (error.code === "auth/weak-password") {
+                        errorMessage.value = "Password should be at least 6 characters";
+                    }
+
+                    else if (error.code === "auth/invalid-email") {
+                        errorMessage.value = "Error, Invalid email";
+                    }
+
+                    else if (error.code === "auth/email-already-in-use") {
+                        errorMessage.value = "Error, Email already in use";
+                    }
+
+
                     console.error(error);
                 });
 
@@ -41,7 +77,7 @@ const SignUpPresenter = defineComponent({
 
             return (
 
-                <SignUpView onSignUp={handleSignUp} />
+                <SignUpView onSignUp={handleSignUp} errorMessage={errorMessage.value} />
 
 
             );
