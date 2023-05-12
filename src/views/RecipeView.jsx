@@ -28,9 +28,9 @@ const RecipeView = defineComponent({
         router.push('/login');
         return;
       }
-      
+
       event.target.disabled = true;
-      
+
       console.log(user.uid)
 
       const recipeRef = push(dbRef(database, `allfavorites`));
@@ -62,12 +62,17 @@ const RecipeView = defineComponent({
           <div class="loadDiv"><span class="loader"></span></div>
           : (props.model.recipe ?
             (<div>
-              <div><b>{props.model.recipe.title}</b></div>
-              <button v-if="isAuthenticated" onClick={addToFavorites}>Add to my favorites</button>
-              <div><b>Ingredients</b></div>
-              <div class="block">{renderIngredients()}</div>
-              <div><b>Instructions</b></div>
-              <div class="block">{renderInstructions()}</div></div>)
+              <ul>
+                <li>
+                  <div><h2 className="h2">{props.model.recipe.title}</h2></div>
+                  <button v-if="isAuthenticated" className="button" onClick={addToFavorites}>Add to my favorites</button>
+                  <div><h3>Ingredients</h3></div>
+                  <div>{renderIngredients()}</div>
+                  <div><h3>Instructions</h3></div>
+                  <div>{renderInstructions()}</div>
+                </li>
+              </ul>
+            </div>)
             : <div>Search for a recipe!</div>)
         )
       );
