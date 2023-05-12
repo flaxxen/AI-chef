@@ -1,6 +1,6 @@
 import { defineComponent, ref } from "vue"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { getDatabase, ref as dbRef, push, set } from "firebase/database";
+import { getDatabase, update, ref as dbRef, push, set } from "firebase/database";
 import { useRouter } from 'vue-router'
 import '/src/assets/recipe.css'; // import the css file
 
@@ -28,14 +28,25 @@ const RecipeView = defineComponent({
         router.push('/login');
         return;
       }
+      
+      event.target.disabled = true;
+      
       console.log(user.uid)
 
-      const recipeRef = push(dbRef(database, `users/${user.uid}/favorites`));
+      const recipeRef = push(dbRef(database, `allfavorites`));
+      const recipeId = recipeRef.key;
       set(recipeRef, {
         title: props.model.recipe.title,
         ingredients: props.model.recipe.ingredients,
         instructions: props.model.recipe.instructions
       });
+
+      const favoritesRef = dbRef(database, `users/${user.uid}/favorites`);
+      const updates = {};
+      updates[recipeId] = true;
+      update(favoritesRef, updates);
+
+      event.target.innerText = 'Already added!';
     }
 
     function renderIngredients() {
