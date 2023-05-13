@@ -3,14 +3,20 @@
     color: #00BD7E;
     text-align: center;
   }
-  
+
   .signup {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+
   .input {
+}
+.signError {
+    color: red;
+}
+
+.input {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -19,7 +25,7 @@
     box-sizing: border-box;
     max-width: 300px;
   }
-  
+
   .button {
     background-color: #4CAF50;
     color: white;
@@ -29,9 +35,8 @@
     cursor: pointer;
     font-size: 16px;
   }
-  
+
   .login {
     color: dodgerblue;
     margin-top: 15px;
   }
-  
