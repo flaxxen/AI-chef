@@ -13,6 +13,7 @@
 
 .searchForm {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .ingredientOn {
