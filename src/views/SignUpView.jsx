@@ -17,6 +17,10 @@ const SignUpView = defineComponent( {
         onSignUp: {
             type: Function,
         },
+        errorMessage: {
+            type: String,
+            default: "", //default state is empty unless something is captured by it
+        },
     },
     setup(props){
         const name = ref("");
@@ -25,6 +29,9 @@ const SignUpView = defineComponent( {
 
         const handleSignUp = () => {
             props.onSignUp(name.value, email.value, password.value);
+            name.value = "";
+            email.value = "";
+            password.value = "";
         };
 
         return function render(){
@@ -32,15 +39,19 @@ const SignUpView = defineComponent( {
                 <div>
 
                     <h1 className="h1">Sign up</h1>
+
+                    <div className="signError">
+
+                        {props.errorMessage && <p className="error">{props.errorMessage}</p>}
+
+                    </div>
+
                     <div className="signup">
                         <input type="text" v-model={name.value} placeholder="Enter Name" className="input"/>
                         <input type="text" v-model={email.value} placeholder="Enter E-mail" className="input"/>
                         <input type="password" v-model={password.value} placeholder="Enter Password" className="input"/>
                         <button onClick={handleSignUp} className="button">Sign Up</button>
-                        <p>
-                            <RouterLink to="/login" class="login">Login</RouterLink>
-
-                        </p>
+                        <p><RouterLink to="/login" class="login">Login</RouterLink></p>
                     </div>
                 </div>)
 
