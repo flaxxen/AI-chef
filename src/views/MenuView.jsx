@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import { RouterLink } from "vue-router";
 
+
 const MenuView = defineComponent({
   props: {
     menuItems: {

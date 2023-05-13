@@ -1,6 +1,7 @@
 import { defineComponent } from "vue"
 import LoginView from "../views/LoginView";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {ref } from "vue";
 
 
 
@@ -13,25 +14,37 @@ const LoginPresenter = defineComponent({
     setup(props) {
 
         const auth = getAuth();
+        const errorMessage = ref("");
+
         const login = (email, password) => {
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // User signed in successfully
+
                     const user = userCredential.user;
+
+                    if(!user.emailVerified) {
+                        errorMessage.value = "Please verify your email before you sign in"
+                        auth.signOut();
+                    }
+
                     console.log(user);
                 })
                 .catch((error) => {
-                    // An error occurred during login
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
+
+                    if (error.code === "auth/invalid-email") {
+                        errorMessage.value = "Error, Invalid email";
+                    }
+                    else if (error.code === "auth/invalid-password") {
+                        errorMessage.value = "Error, Wrong password";
+                    }
+
                 });
         }
 
 
         return function render() {
             return (
-                <LoginView onLogin={login}/>
+                <LoginView onLogin={login} errorMessage={errorMessage.value}/>
             );
         };
     },
