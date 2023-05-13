@@ -3,31 +3,19 @@ import { useRoute, useRouter } from "vue-router";
 import '/src/assets/navbar.css'; 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-export default defineComponent({
-  name: "Navbar",
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const auth = getAuth();
-    const user = ref(null);
+const NavbarView = defineComponent({
+  props: {
+    logoutFunction: {
+      type: Function
+    },
+    user: {
+      type: Object
+    }
+  },
 
-    onAuthStateChanged(auth, (firebaseUser) => {
-      user.value = firebaseUser;
-    });
-
-    const logout = () => {
-      signOut(auth)
-        .then(() => {
-          localStorage.removeItem("user");
-          router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
+  setup(props) {
     return () => {
-      if (user.value) {
+      if (props.user) {
         return (
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -35,7 +23,7 @@ export default defineComponent({
                 <ul class="navbar-nav me-auto"></ul>
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <button class="btn btn-outline-danger" onClick={logout}>
+                    <button class="btn btn-outline-danger" onClick={props.logoutFunction}>
                       Logout
                     </button>
                   </li>
@@ -50,3 +38,5 @@ export default defineComponent({
     };
   },
 });
+
+export default NavbarView;

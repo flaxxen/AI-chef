@@ -20,9 +20,9 @@ function gpt3recipe(ingredientsList) {
         'Authorization': 'Bearer ' + configuration.apiKey
     },
     body: JSON.stringify({
-        'model': 'text-ada-001',
+        'model': 'text-davinci-003',
         'prompt': generatePrompt(ingredientsList),
-        'max_tokens': 1000,
+        'max_tokens': 2000,
         'temperature': 0
     })
   }).then(treatHTTPResponseACB).then(getResultsArrayACB);
