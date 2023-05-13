@@ -43,7 +43,19 @@ export const allIngredients = {
   eggplant: '127814',
   tomatoes: '127813',
   bread: '127838',
-  potatoes: '129364'
+  potatoes: '129364',
+
+  broccoli:'129382',
+  eggs: '129370',
+  carrots: '129365',
+  bacon: '129363',
+  avocado: '129361',
+  cucumber: '129362',
+  chicken: '128036',
+  rice: '127834',
+  banana: '127820',
+  apples: '127822'
+
 };
 
 export default SearchModel
