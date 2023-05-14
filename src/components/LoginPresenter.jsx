@@ -1,53 +1,65 @@
-import { defineComponent } from "vue"
+import { defineComponent , ref } from "vue"
 import LoginView from "../views/LoginView";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {ref } from "vue";
-
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 
 const LoginPresenter = defineComponent({
 
-    props: {
+  setup() {
 
-    },
+    const auth = getAuth();
+    const email = ref("");
+    const password = ref("");
+    const user = ref(null);
+    const errorMessage = ref("");
 
-    setup(props) {
+    //whenever auth state changes this function will be called and update the user prop
+    onAuthStateChanged(auth, (firebaseUser) => {
+        user.value = firebaseUser;
+    });
 
-        const auth = getAuth();
-        const errorMessage = ref("");
+    function handleLogout() {
+      signOut(auth)
+        .then(() => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    function updateEmail(newEmail){
+      email.value = newEmail;
+    }
+    function updatePassword(newPassword){
+      password.value = newPassword;
+    }
+    function login () {
+      signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          const user = userCredential.user;
 
-        const login = (email, password) => {
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-
-                    const user = userCredential.user;
-
-                    if(!user.emailVerified) {
-                        errorMessage.value = "Please verify your email before you sign in"
-                        auth.signOut();
-                    }
-
-                    console.log(user);
-                })
-                .catch((error) => {
-
-                    if (error.code === "auth/invalid-email") {
-                        errorMessage.value = "Error, Invalid email";
-                    }
-                    else if (error.code === "auth/invalid-password") {
-                        errorMessage.value = "Error, Wrong password";
-                    }
-
-                });
-        }
+          if(!user.emailVerified) {
+            errorMessage.value = "Please verify your email before you sign in"
+            auth.signOut();
+          }
+          console.log(user);
+        })
+        .catch((error) => {
+          if (error.code === "auth/invalid-email") {
+            errorMessage.value = "Error, Invalid email";
+          }
+          else if (error.code === "auth/invalid-password") {
+            errorMessage.value = "Error, Wrong password";
+          }
+        });
+    }
 
 
-        return function render() {
-            return (
-                <LoginView onLogin={login} errorMessage={errorMessage.value}/>
-            );
-        };
-    },
+    return function render() {
+      return (
+        <LoginView onLogin={login} onLogout={handleLogout} updateEmail={updateEmail} updatePassword={updatePassword} user={user} errorMessage={errorMessage.value}/>
+      );
+    };
+  },
 });
 
 export default LoginPresenter;
