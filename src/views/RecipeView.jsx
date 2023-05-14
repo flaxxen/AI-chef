@@ -10,7 +10,7 @@ const RecipeView = defineComponent({
       type: Function
     },
     isAuthenticated: {
-      type: Boolean,
+      type: Object,
       default: false
     },
   },
@@ -19,7 +19,6 @@ const RecipeView = defineComponent({
     
     function addRecipe(event) {
       props.addFavorite();
-      console.log(props.isAuthenticated);
       if (props.isAuthenticated) {  
         event.target.disabled = true;
         event.target.innerText = 'Already added!';
@@ -43,7 +42,7 @@ const RecipeView = defineComponent({
               <ul>
                 <li>
                   <div><h2 className="h2">{props.model.recipe.title}</h2></div>
-                  <button v-if={props.isAuthenticated} className="button" onClick={addRecipe}>Add to my favorites</button>
+                  <button className="button" onClick={addRecipe}>Add to my favorites</button>
                   <div><h3>Ingredients</h3></div>
                   <div>{renderIngredients()}</div>
                   <div><h3>Instructions</h3></div>
