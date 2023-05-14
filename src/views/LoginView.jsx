@@ -52,7 +52,7 @@ const LoginView = defineComponent({
               <input type="text" onChange= {emailChanged} onkeypress = {emailChanged} onpaste = {emailChanged} oninput ={emailChanged} placeholder="Enter E-mail" className="input"/>
               <input type="password" onChange={passwordChanged} onkeypress = {passwordChanged} onpaste = {passwordChanged} oninput ={passwordChanged} placeholder="Enter Password" className="input"/>
               <button onClick={props.onLogin} className="button">Login</button>
-              <RouterLink to="signup" class="sign">SignUp</RouterLink>
+              <RouterLink to="signup" class="sign">Sign Up</RouterLink>
               </div>
             </div>
           )}
