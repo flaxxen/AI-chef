@@ -40,14 +40,12 @@ const RecipeView = defineComponent({
           : (props.model.recipe ?
             (<div>
               <ul>
-                <li>
                   <div><h2 className="h2">{props.model.recipe.title}</h2></div>
                   <button className="button" onClick={addRecipe}>Add to my favorites</button>
                   <div><h3>Ingredients</h3></div>
                   <div>{renderIngredients()}</div>
                   <div><h3>Instructions</h3></div>
                   <div>{renderInstructions()}</div>
-                </li>
               </ul>
             </div>)
             : 

@@ -170,3 +170,12 @@ background-position: right center , 17px center , 0px center;
   max-height: 400px;
   overflow-y: scroll;
 }
+
+.favoriteList {
+  display: flex;
+  align-items: flex-start;
+  border: 3px solid lightgray;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}

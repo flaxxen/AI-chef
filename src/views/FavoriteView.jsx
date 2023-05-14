@@ -88,7 +88,7 @@ const FavoriteView = defineComponent({
                     <div className="scroll-container">
                         <ul>
                             {this.searchResults.map((recipe) => (
-                                <li key={recipe.id}>
+                                <li key={recipe.id} class="favoriteList">
                                     <div>
                                         <div><h2 className="h2">{recipe.title}</h2></div>
                                         <button className="button" onClick={() => this.removeSearchRecipe(recipe.id)}>Delete</button>
@@ -117,7 +117,7 @@ const FavoriteView = defineComponent({
                 {this.reactiveFavorites.length > 0 ? (
                     <ul>
                         {this.reactiveFavorites.map(recipe => (
-                            <li key={recipe.id}>
+                            <li key={recipe.id} class="favoriteList">
                                 <div>
                                     <div><h2 className="h2">{recipe.title}</h2></div>
                                     <button className="button" onClick={() => this.removeRecipe(recipe.id)}>Delete</button>
