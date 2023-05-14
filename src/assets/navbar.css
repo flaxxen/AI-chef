@@ -3,5 +3,80 @@
   top: 0;
   right: 0;
 }
+.loginButton {
+  background-color: #00cc66;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  height: 30px;
+  margin-left: 5px;
+}
 
-  
+.logoutButton {
+  background-color: #fff;
+  color: #a90d0d;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border:1px solid;
+  border-color: #a90d0d;
+  cursor: pointer;
+  font-size: 16px;
+  height: 30px;
+  padding-top: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  height: 30px;
+}
+.logoutButton:hover{
+  background-color:#A90d0d;
+  color: #fff;
+}
+.hamburgerButton {
+  width: 30px;
+  height: 25px;
+
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  background-color: #f8f9fa;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+nav ul li a {
+  color: #333; /* Change the color to dark gray */
+  text-decoration: none; /* Remove underline */
+  font-family: Arial, sans-serif; /* Change the font */
+  transition: color 0.2s ease; /* Add smooth color transition */
+}
+
+
+/* Hide the hamburger button when screen width is greater than 600px */
+@media (min-width: 600px) {
+  .hamburgerButton {
+    display: none;
+  }
+}
+
+/* Always show the nav menu when screen width is greater than 600px */
+@media (min-width: 600px) {
+  nav div {
+    display: block !important;
+  }
+}
