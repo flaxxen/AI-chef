@@ -47,3 +47,5 @@ more user-friendly and connect the different pages to each-other so that they ca
 The project is structured in a way where views,components and assets have their own folders. The views hold the actual code/components of the different page views whilst
 the presenters render these. The main jsx file "App.jsx" routes to these presenters when different views need to be shown. The asset folder holds most of the aesthetic modifying
 css files. Lastly there is also a dedicated folder to define the different paths for the routing links used.
+
+test
