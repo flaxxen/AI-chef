@@ -165,3 +165,8 @@ background-position: right center , 17px center , 0px center;
 .createRecipieButton:hover {
   background-color: #ff6699;
 }
+
+.scroll-container {
+  max-height: 400px;
+  overflow-y: scroll;
+}
