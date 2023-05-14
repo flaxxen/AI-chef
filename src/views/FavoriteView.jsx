@@ -25,11 +25,7 @@ const FavoriteView = defineComponent({
     methods: {
         search() {
             this.searchResults = [];
-            // for (const recipe of this.favoriteRecipes.value) {
-            //     if (recipe.title.includes(this.searchText)) {
-            //         this.searchResults.push(recipe);
-            //     }
-            // }
+
             const searchRegex = new RegExp(this.searchText, 'i');
 
             for (const recipe of this.favoriteRecipes.value) {
@@ -67,7 +63,6 @@ const FavoriteView = defineComponent({
             this.reactiveFavorites.splice(index, 1);
             console.log(`Removed recipe with ID ${recipeId}`);
             console.log(this.favoriteRecipes);
-            //this.search();
 
             const auth = getAuth();
             const db = getDatabase();
@@ -97,8 +92,18 @@ const FavoriteView = defineComponent({
                                     <div>
                                         <div><h2 className="h2">{recipe.title}</h2></div>
                                         <button className="button" onClick={() => this.removeSearchRecipe(recipe.id)}>Delete</button>
-                                        <div><h3>Ingredients:</h3> {recipe.ingredients}</div>
-                                        <div><h3>Instructions:</h3> {recipe.instructions}</div>
+                                        <div>
+                                            <h3>Ingredients:</h3>
+                                            {Object.values(recipe.ingredients).map((ingredient, index) => (
+                                                <div key={index}>{ingredient}</div>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            <h3>Instructions:</h3>
+                                            {Object.values(recipe.instructions).map((instruction, index) => (
+                                                <div key={index}>{instruction}</div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </li>
                             ))}
@@ -109,17 +114,32 @@ const FavoriteView = defineComponent({
                 )}
 
                 <h3 className="hh">All my favorites:</h3>
-                <ul>
-                    {this.reactiveFavorites.map(recipe => (
-                        <li key={recipe.id}>
-                            <div><h2 className="h2">{recipe.title}</h2></div>
-                            <button className="button" onClick={() => this.removeRecipe(recipe.id)}>Delete</button>
-                            <div><h3>Ingredients:</h3> {recipe.ingredients}</div>
-                            <div><h3>Instructions:</h3> {recipe.instructions}</div>
-                        </li>
-                    ))}
-                </ul>
-                {this.favoriteRecipes.length === 0 && <div>No favorite recipe.</div>}
+                {this.reactiveFavorites.length > 0 ? (
+                    <ul>
+                        {this.reactiveFavorites.map(recipe => (
+                            <li key={recipe.id}>
+                                <div>
+                                    <div><h2 className="h2">{recipe.title}</h2></div>
+                                    <button className="button" onClick={() => this.removeRecipe(recipe.id)}>Delete</button>
+                                    <div>
+                                        <h3>Ingredients:</h3>
+                                        {Object.values(recipe.ingredients).map((ingredient, index) => (
+                                            <div key={index}>{ingredient}</div>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <h3>Instructions:</h3>
+                                        {Object.values(recipe.instructions).map((instruction, index) => (
+                                            <div key={index}>{instruction}</div>
+                                        ))}
+                                    </div>
+                                    {/* {console.log(typeof recipe.ingredients)}
+                                    {console.log(typeof recipe.instructions)} */}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (<div>No favorite recipe.</div>)}
             </div>
         );
     },
