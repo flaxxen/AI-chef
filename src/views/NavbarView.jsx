@@ -1,6 +1,7 @@
 import { defineComponent} from "vue"; 
 import { RouterLink } from 'vue-router'
 import '/src/assets/navbar.css';
+import aicheflogo from '/src/assets/Aichef.png';
 
 const NavbarView = defineComponent({
   props: {
@@ -24,7 +25,8 @@ const NavbarView = defineComponent({
     return function render() {
       return (
         <nav>
-          <a>AI Chef</a>
+          <img class="smalllogo" src={aicheflogo}></img>
+          
           <div v-show={!props.open}>
             <ul>
               <li>

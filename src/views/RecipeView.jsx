@@ -73,7 +73,7 @@ const RecipeView = defineComponent({
                 </li>
               </ul>
             </div>)
-            : <div>Search for a recipe!</div>)
+            : <div></div>)
         )
       );
     };
