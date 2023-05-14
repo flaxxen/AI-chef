@@ -1,7 +1,7 @@
 import { defineComponent} from "vue"; 
 import { RouterLink } from 'vue-router'
 import '/src/assets/navbar.css';
-import aicheflogo from '/src/assets/Aichef.png';
+import aicheflogo from './../assets/Aichef.png';
 
 const NavbarView = defineComponent({
   props: {
