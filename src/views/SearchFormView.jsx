@@ -31,7 +31,7 @@ const SearchFormView = defineComponent({
       return (
         <div class="searchForm">
           { renderIngredients() }
-          <button onClick={ props.search }>Create recipe</button>
+          <button class="createRecipieButton" onClick={ props.search }>Create recipe</button>
         </div>
       );
     };
