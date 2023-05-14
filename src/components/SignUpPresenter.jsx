@@ -13,10 +13,23 @@ const SignUpPresenter = defineComponent({
         const database = getDatabase();
         const errorMessage = ref("");
 
-        const handleSignUp = (name, email, password) => {
+        const name = ref("");
+        const email = ref("");
+        const password = ref("");
 
+        function updateName(newName){
+            name.value = newName;
+        }
+        function updateEmail(newEmail){
+            email.value = newEmail;
+        }
+        function updatePassword(newPassword){
+            password.value = newPassword;
+        }
 
-            createUserWithEmailAndPassword(auth,email, password)
+        function handleSignUp () {
+            console.log("hello");
+            createUserWithEmailAndPassword(auth,email.value, password.value)
                 .then((userCredential) => {
                     // User signed up successfully
                     const user = userCredential.user;
@@ -26,8 +39,8 @@ const SignUpPresenter = defineComponent({
                     const uid = user.uid;
                     const userRef = dbRef(database, `users/${uid}`);
                     set(userRef, {
-                        name,
-                        email
+                        name: name.value,
+                        email: email.value
                     });
 
 
@@ -38,10 +51,6 @@ const SignUpPresenter = defineComponent({
                         .catch((error) => {
 
                         });
-
-
-
-
 
                     auth.signOut();
                     errorMessage.value = "A verification link has been sent to your email";
@@ -77,7 +86,7 @@ const SignUpPresenter = defineComponent({
 
             return (
 
-                <SignUpView onSignUp={handleSignUp} errorMessage={errorMessage.value} />
+                <SignUpView updatePassword={updatePassword} updateEmail={updateEmail} updateName={updateName} onSignUp={handleSignUp} errorMessage={errorMessage.value} />
 
 
             );
