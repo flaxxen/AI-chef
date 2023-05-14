@@ -1,42 +1,59 @@
-import { defineComponent, ref } from "vue"; 
-import { useRoute, useRouter } from "vue-router";
-import '/src/assets/navbar.css'; 
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { defineComponent} from "vue"; 
+import { RouterLink } from 'vue-router'
+import '/src/assets/navbar.css';
 
 const NavbarView = defineComponent({
   props: {
     logoutFunction: {
-      type: Function
+      type: Function,
     },
     user: {
-      type: Object
-    }
+      type: Object,
+    },
+    toggleMenu: {
+      type: Function
+    },
+    open: {
+      type: Boolean,
+      default: false
+    },
   },
 
   setup(props) {
-    return () => {
-      if (props.user) {
-        return (
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto"></ul>
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <button class="btn btn-outline-danger" onClick={props.logoutFunction}>
-                      Logout
-                    </button>
+
+    return function render() {
+      return (
+        <nav>
+          <a>AI Chef</a>
+          <div v-show={!props.open}>
+            <ul>
+              <li>
+                <RouterLink to="/">Home</RouterLink>
+              </li>
+              {this.user ? (
+                <>
+                  <li>
+                    <RouterLink to="/favorite">Favorite</RouterLink>
                   </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        );
-      } else {
-        return null; // Navbar only rendered if user is logged in.
-      }
+                  <li>
+                    <button class = "logoutButton" onClick={this.logoutFunction}>Logout</button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <RouterLink to="/login">Login</RouterLink>
+                </li>
+              )}
+            </ul>
+          </div>
+          <button class="hamburgerButton" onClick={props.toggleMenu}>
+            ☰
+          </button>
+
+        </nav>
+      )
     };
-  },
+  }
 });
 
 export default NavbarView;

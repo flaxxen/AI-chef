@@ -128,22 +128,3 @@ background-position: right center , 17px center , 0px center;
 100%{  transform: rotate(10deg)  }
 }
 
-.scroll-container {
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-ul {
-  list-style-type: none;
-}
-
-li {
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #000;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  margin-right: 40px;
-}
-
