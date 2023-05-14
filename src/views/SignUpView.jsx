@@ -5,14 +5,14 @@ import "/src/assets/SignUp.css";
 
 const SignUpView = defineComponent( {
     props: {
-        name: {
-            type: String,
+        updateName: {
+            type: Function,
         },
-        email: {
-            type: String,
+        updateEmail: {
+            type: Function,
         },
-        password: {
-            type: String,
+        updatePassword: {
+            type: Function,
         },
         onSignUp: {
             type: Function,
@@ -23,17 +23,17 @@ const SignUpView = defineComponent( {
         },
     },
     setup(props){
-        const name = ref("");
-        const email = ref("");
-        const password = ref("");
-
-        const handleSignUp = () => {
-            props.onSignUp(name.value, email.value, password.value);
-            name.value = "";
-            email.value = "";
-            password.value = "";
-        };
-
+        
+        function nameChanged(event) {
+            props.updateName(event.target.value);
+        }
+        function emailChanged(event) {
+            props.updateEmail(event.target.value);
+        }
+        function passwordChanged(event) {
+            props.updatePassword(event.target.value);
+        }
+ 
         return function render(){
             return (
                 <div>
@@ -47,10 +47,10 @@ const SignUpView = defineComponent( {
                     </div>
 
                     <div className="signup">
-                        <input type="text" v-model={name.value} placeholder="Enter Name" className="input"/>
-                        <input type="text" v-model={email.value} placeholder="Enter E-mail" className="input"/>
-                        <input type="password" v-model={password.value} placeholder="Enter Password" className="input"/>
-                        <button onClick={handleSignUp} className="button">Sign Up</button>
+                        <input type="text" onChange={nameChanged} onkeypress = {nameChanged} onpaste = {nameChanged} oninput ={nameChanged} placeholder="Enter Name" className="input"/>
+                        <input type="text" onChange= {emailChanged} onkeypress = {emailChanged} onpaste = {emailChanged} oninput ={emailChanged} placeholder="Enter E-mail" className="input"/>
+                        <input type="password" onChange={passwordChanged} onkeypress = {passwordChanged} onpaste = {passwordChanged} oninput ={passwordChanged} placeholder="Enter Password" className="input"/>
+                        <button onClick={props.onSignUp} className="button">Sign Up</button>
                         <p><RouterLink to="/login" class="login">Login</RouterLink></p>
                     </div>
                 </div>)
