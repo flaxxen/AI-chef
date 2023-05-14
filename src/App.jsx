@@ -6,20 +6,22 @@ import Navbar from './components/NavbarPresenter.jsx';
 const App = defineComponent({
   render() {
     return (
-      <div>
-        <Navbar />
-        <div class="container">
+      <div class="container">
+        <div class="leftMargin"></div>
+          <div class="middleBox">
+            <Navbar />
             <div class="mainContent">
-            <header>
+              <header>
                 <div class="wrapper">
-                <h1>Welcome to the AI Chef!</h1>
-                <p>Customize your meal by choosing your favorite ingredients.</p>
-                {}
+                  <h1>Welcome to the AI Chef!</h1>
+                  <p>Customize your meal by choosing your favorite ingredients.</p>
+                  {}
                 </div>
-            </header>
-            <RouterView model={new SearchModel()} />
+              </header>
+              <RouterView model={new SearchModel()} />
             </div>
-        </div>
+         </div>
+        <div class="rightMargin"></div>
       </div>
     )
   }
