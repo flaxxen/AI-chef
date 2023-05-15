@@ -1,81 +1,61 @@
-import { defineComponent, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { defineComponent} from "vue"; 
+import { RouterLink } from 'vue-router'
 import '/src/assets/navbar.css';
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import AiChefLogo from '../assets/chef.png';
 
-export default defineComponent({
-  name: "Navbar",
-  setup() {
-    const router = useRouter();
-    const auth = getAuth();
-    const user = ref(null);
+const NavbarView = defineComponent({
+  props: {
+    logoutFunction: {
+      type: Function,
+    },
+    user: {
+      type: Object,
+    },
+    toggleMenu: {
+      type: Function
+    },
+    open: {
+      type: Boolean,
+      default: false
+    },
+  },
 
-    onAuthStateChanged(auth, (firebaseUser) => {
-      user.value = firebaseUser;
-    });
+  setup(props) {
 
-    const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        localStorage.removeItem("user");
-        router.push("/login");
-      } 
-      catch (error) {
-        console.log(error);
-      }
-    };
-
-    const renderAuthButtons = () => {
-      if (user.value) {
-        return (
-          <>
-            <li class="nav-item">
-              <button class="btn btn-outline-danger" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          </>
-        );
-      } 
-      else {
-        return (
-          <>
-            <li class="nav-item">
-              <router-link to="/login" class="btn btn-primary">
-                Login
-              </router-link>
-            </li>
-          </>
-        );
-      }
-    };
-
-    return () => (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-              {user.value && (
+    return function render() {
+      return (
+        <nav>
+          <img class="smalllogo" src={AiChefLogo}></img>
+          
+          <div v-show={!props.open}>
+            <ul>
+              <li>
+                <RouterLink to="/">Home</RouterLink>
+              </li>
+              {this.user ? (
                 <>
-                  <li class="nav-item">
-                    <router-link to="/" class="nav-link">
-                      Home
-                    </router-link>
+                  <li>
+                    <RouterLink to="/favorite">Favorite</RouterLink>
                   </li>
-                  <li class="nav-item">
-                    <router-link to="/favorite" class="nav-link">
-                      Favorites
-                    </router-link>
+                  <li>
+                    <button class = "logoutButton" onClick={this.logoutFunction}>Logout</button>
                   </li>
                 </>
+              ) : (
+                <li>
+                  <RouterLink to="/login">Login</RouterLink>
+                </li>
               )}
             </ul>
-            <ul class="navbar-nav">
-              {renderAuthButtons()}
-            </ul>
           </div>
-        </div>
-      </nav>
-    );
-  },
+          <button class="hamburgerButton" onClick={props.toggleMenu}>
+            ☰
+          </button>
+
+        </nav>
+      )
+    };
+  }
 });
+
+export default NavbarView;
