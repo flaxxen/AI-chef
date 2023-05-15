@@ -4,7 +4,15 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { get, getDatabase, ref as dbRef, onValue } from "firebase/database";
 
 const Favorite = defineComponent({
-  setup() {
+  props: {
+    model: {
+      Object
+    },
+  },
+
+  setup(props) {
+
+    /*
     const auth = getAuth();
     const database = getDatabase();
     const user = ref(null);
@@ -43,6 +51,28 @@ const Favorite = defineComponent({
         favoriteRecipes.value = [];
       }
     });
+*/
+    const isSearching = ref(false);
+    const favorites = reactive(props.model.favoriteRecipes);
+    const currentlyDisplayedRecipes = favorites;
+    const query = "";
+
+    function search() {
+      if (query == "") {
+        currentlyDisplayedRecipes = favorites;
+        isSearching.value = false;
+      }
+
+    }
+
+    function removeFavorite(id) {
+      props.model.removeFromFavorites(id);
+    }
+
+    function updateQuery(newQuery) {
+      query = newQuery;
+    }
+
 
 
     return function render() {
@@ -57,7 +87,7 @@ const Favorite = defineComponent({
         );
       }
       else {
-        return <FavoriteView favoriteRecipes={favoriteRecipes} />;
+        return <FavoriteView search={search} searching={isSearching.value} favoriteRecipes={currentlyDisplayedRecipes} updateQuery={updateQuery} removeFavorite={removeFavorite} />;
       }
     };
   },

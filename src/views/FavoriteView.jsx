@@ -1,14 +1,14 @@
 import { defineComponent, reactive } from 'vue';
 import { getDatabase, ref, remove } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+/*
 const FavoriteView = defineComponent({
-    props: {
-        favoriteRecipes: {
-            type: Array,
-            required: true
-        }
-    },
+  props: {
+    favoriteRecipes: {
+      type: Array,
+      required: true
+    }
+   ,
 
     data() {
         return {
@@ -83,7 +83,7 @@ const FavoriteView = defineComponent({
                 <input type="text" className="input" v-model={this.searchText} placeholder="Search my favorite recipe" />
                 <button onClick={this.search} className="button">Search</button>
 
-                {/* Search results */}
+                {/* Search results *//*}
                 {this.searchResults.length > 0 ? (
                     <div className="scroll-container">
                         <ul>
@@ -134,7 +134,7 @@ const FavoriteView = defineComponent({
                                         ))}
                                     </div>
                                     {/* {console.log(typeof recipe.ingredients)}
-                                    {console.log(typeof recipe.instructions)} */}
+                                    {console.log(typeof recipe.instructions)} *//*}
                                 </div>
                             </li>
                         ))}
@@ -144,5 +144,91 @@ const FavoriteView = defineComponent({
         );
     },
 });
+
+export default FavoriteView;
+
+*/
+
+const FavoriteView = defineComponent({
+props: {
+  favoriteRecipes: {
+    type: Array,
+    default: []
+  },
+  removeFavorite: {
+      type: Function
+  },
+  search: {
+      type: Function
+  },
+  searching: {
+    type: Boolean,
+    default: false
+  },
+  updateQuery: {
+    type: Function
+  }
+},
+
+  setup( props ) {
+    function queryChanged(event) {
+        updateQuery(event.target.value);
+    }
+    
+    function renderInstructions() {
+      return (
+        Object.values(recipe.instructions).map((instruction, index) => (
+            <div key={index}>{instruction}</div>
+        ))
+      )
+    }
+
+    function renderIngredients(ingredients) {
+      return (
+        Object.values(ingredients).map((ingredient, index) => (
+          <div key={index}>{ingredient}</div>
+        ))
+      )
+    }
+
+    function renderRecipes(){
+      return props.favoriteRecipes.map((recipe) => 
+        <li key={recipe.id} class="favoriteList">
+          <div>
+            <div><h2 className="h2">{recipe.title}</h2></div>
+            <button className="button" onClick={props.removeFavorite(recipe.id)}>Delete</button>
+            <div>
+              <h3>Ingredients:</h3>
+              {renderIngredients(recipe.ingredients)}  
+            </div>
+            <div>
+              <h3>Instructions:</h3>
+              {renderInstructions(recipe.instructions)}
+            </div>
+          </div>  
+        </li>
+      )
+    }
+
+
+    return (
+        <div>
+          <h1 className="h1">My Favorite Recipes</h1>
+          <input type="text" className="input" onChange={queryChanged} onkeypress = {queryChanged} onpaste = {queryChanged} oninput ={queryChanged} placeholder="Search my favorite recipe" />
+          <button onClick={props.search} className="button">Search</button>
+          {props.favoriteRecipes.length > 0 ? 
+            <div className="scroll-container">
+              <ul>
+                {renderRecipes()}
+              </ul>
+            </div>
+          : props.searching ? 
+            <div>No results found.</div>
+          : <div>No favorite recipe.</div>
+          }
+        </div>
+    )
+  }
+})
 
 export default FavoriteView;
