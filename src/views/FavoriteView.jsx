@@ -67,10 +67,9 @@ const FavoriteView = defineComponent({
 
     return function render() {
       return (
-        <div>
+        <div class="favoriteDiv">
           <h1 className="h1">My Favorite Recipes</h1>
           <input type="text" className="input" onChange={queryChanged} onkeypress = {queryChanged} onpaste = {queryChanged} oninput ={queryChanged} placeholder="Search my favorite recipe" />
-          <button onClick={props.search} className="button">Search</button>
           {props.favoriteRecipes.length > 0 ? 
             <div className="scroll-container">
               <ul>

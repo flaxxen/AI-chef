@@ -179,3 +179,20 @@ background-position: right center , 17px center , 0px center;
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcomeItem {
+  text-align: center;
+}
+
+.favoriteDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

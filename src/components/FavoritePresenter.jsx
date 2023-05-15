@@ -12,7 +12,7 @@ const Favorite = defineComponent({
   setup(props) {
     const auth = getAuth();
     const isAuthenticated = ref(false);
-    const isSearching = ref(false);
+    const isSearching = ref(true);
     const favorites = computed(() => props.model.favoriteRecipes);
     const query = ref("");
     
@@ -41,6 +41,8 @@ const Favorite = defineComponent({
 
     function updateQuery(newQuery) {
       query.value = newQuery;
+      if (query === "")
+        isSearching.value = false;
     }
 
     return function render() {
