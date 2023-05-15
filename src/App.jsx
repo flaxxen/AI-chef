@@ -13,9 +13,6 @@ const App = defineComponent({
             <div class="mainContent">
               <header>
                 <div class="wrapper">
-                  <h1>Welcome to the AI Chef!</h1>
-                  <p>Customize your meal by choosing your favorite ingredients.</p>
-                  {}
                 </div>
               </header>
               <RouterView model={new SearchModel()} />

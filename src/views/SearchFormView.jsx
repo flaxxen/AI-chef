@@ -29,7 +29,11 @@ const SearchFormView = defineComponent({
     
     return function render() {
       return (
+        
         <div class="searchForm">
+          <h1>Welcome to the AI Chef!</h1>
+          <h2>Customize your meal by choosing your favorite ingredients below.</h2>
+            {}
           { renderIngredients() }
           <button class="createRecipieButton" onClick={ props.search }>Create recipe</button>
         </div>
