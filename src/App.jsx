@@ -33,14 +33,7 @@ const App = defineComponent({
           <div class="leftMargin"></div>
             <div class="middleBox">
               <Navbar />
-              <div class="mainContent">
-                <header>
-                  <div class="wrapper">
-                    <h1>Welcome to the AI Chef!</h1>
-                    <p>Customize your meal by choosing your favorite ingredients.</p>
-                    {}
-                  </div>
-                </header>
+              <div class="mainContent">              
                 <RouterView model={topModel} />
               </div>
           </div>
