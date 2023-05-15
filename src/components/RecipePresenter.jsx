@@ -13,10 +13,10 @@ const Recipe = defineComponent({
   },
 
   setup( props ) {
-    const isAuthenticated = ref(false)
-    const auth = getAuth()
-    const router = useRouter()
-    const database = getDatabase()
+    const isAuthenticated = ref(false);
+    const auth = getAuth();
+    const router = useRouter();
+    const database = getDatabase();
     const user = auth.currentUser;
 
     onAuthStateChanged(auth, (user) => {
@@ -30,20 +30,8 @@ const Recipe = defineComponent({
         return;
       }
 
-      
-      const recipeRef = push(dbRef(database, `allfavorites`));
-      const recipeId = recipeRef.key;
-      set(recipeRef, {
-        title: props.model.recipe.title,
-        ingredients: props.model.recipe.ingredients,
-        instructions: props.model.recipe.instructions
-      });
-
-      const favoritesRef = dbRef(database, `users/${user.uid}/favorites`);
-      const updates = {};
-      updates[recipeId] = true;
-      update(favoritesRef, updates);
-
+      props.model.addCurrentRecipeToFavorites();
+      return;
     };
 
       return function render() {

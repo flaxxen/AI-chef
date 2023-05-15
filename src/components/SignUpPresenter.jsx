@@ -28,7 +28,7 @@ const SignUpPresenter = defineComponent({
         }
 
         function handleSignUp () {
-            console.log("hello");
+            console.log("hello");   
             createUserWithEmailAndPassword(auth,email.value, password.value)
                 .then((userCredential) => {
                     // User signed up successfully
