@@ -40,7 +40,6 @@ function treatHTTPResponseACB(response){
 }
 
 function generatePrompt(ingredientsList) {
-  console.log(ingredientsList);
   const ingredients = ingredientsList.join();
   return "create a recipe using " + ingredients + ". Start with a title and then step by step instructions. Sure! Here is the recipe for ";
 }

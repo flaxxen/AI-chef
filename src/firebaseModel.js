@@ -49,7 +49,6 @@ function getAllUserRecipesFromFirebase(model) {
 }
 
 function updateFirebaseFromModel(model) {
-  console.log("adding CB to update fb");
 	function relevantChangeACB(payload){
     const user = getAuth().currentUser;
 		if (payload && payload.addFavorite) {
