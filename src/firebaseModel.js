@@ -51,19 +51,30 @@ function getAllUserRecipesFromFirebase(model) {
 function updateFirebaseFromModel(model) {
   console.log("adding CB to update fb");
 	function relevantChangeACB(payload){
-
-    console.log("Callback relevant change!");
     const user = getAuth().currentUser;
 		if (payload && payload.addFavorite) {
       const recipeRef = push(ref(db, `allfavorites`));
       const recipeId = recipeRef.key;
       payload.setIdCB(recipeId);
+      payload.updateModel();
       set(recipeRef, payload.addFavorite);
       const favoritesRef = ref(db, `users/${user.uid}/favorites`);
       const updates = {};
       updates[recipeId] = true;
       update(favoritesRef, updates);
-		}
+
+		} 
+    else if (payload && payload.removeFavorite) {
+      console.log(`Removing recipe with ID ${payload.removeFavorite}`);
+      
+      const auth = getAuth();
+      const recipeRef = ref(db, `users/${auth.currentUser.uid}/favorites/${payload.removeFavorite}`);
+      remove(recipeRef).then(() => {
+        console.log(`Removed recipe with ID ${payload.removeFavorite} from Firebase Realtime Database`);
+      }).catch((error) => {
+        console.error(`Error removing recipe with ID ${payload.removeFavorite} from Firebase Realtime Database: ${error}`);
+      });
+    }
 	}
 
   model.addObserver(relevantChangeACB);

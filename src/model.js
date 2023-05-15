@@ -1,4 +1,3 @@
-import { sha256 } from "./utilities.js"
 import { getAuth } from "firebase/auth";
 
 class SearchModel {
@@ -30,14 +29,41 @@ class SearchModel {
       return;
 
     this.favoriteRecipes = this.favoriteRecipes.filter(r => r.id != id);
+    this.notifyObservers({removeFavorite: id});
+  }
+
+  update() {
+    if (Array.isArray(this.favoriteRecipes))
+      this.favoriteRecipes =[...this.favoriteRecipes];
+    else
+      this.favoriteRecipes = [];
   }
 
   addCurrentRecipeToFavorites() {
     if (this.favoriteRecipes && this.favoriteRecipes.some(r => r.id == this.recipe.id))
       return;
-    
+/*    
     this.favoriteRecipes = [...this.favoriteRecipes, this.recipe];
-    this.notifyObservers({addFavorite: this.recipe, setIdCB: this.recipe.setId});
+    this.notifyObservers({addFavorite: this.favoriteRecipes[this.favoriteRecipes.length - 1], 
+      setIdCB: this.favoriteRecipes[this.favoriteRecipes.length - 1].setId, 
+      updateModel: this.update});
+*/
+
+    // Create a copy of the current recipe
+    const newRecipe = { ...this.recipe };
+    this.favoriteRecipes = [...this.favoriteRecipes, newRecipe];
+
+    this.notifyObservers({
+      addFavorite: newRecipe,
+      setIdCB: (id) => {
+        // Find the newly added recipe in favoriteRecipes and update its id
+        let index = this.favoriteRecipes.indexOf(newRecipe);
+        if (index !== -1) {
+          this.favoriteRecipes[index].id = id;
+        }
+      }, 
+      updateModel: this.update
+    });
   }
 
   addObserver(callback) {
@@ -78,6 +104,7 @@ export class RecipeModel {
   }
   setId(id) {
     this.id = id;
+    console.log("setting id " + id);
   }
 }
 
@@ -86,7 +113,6 @@ export const allIngredients = {
   tomatoes: '127813',
   bread: '127838',
   potatoes: '129364',
-
   broccoli:'129382',
   eggs: '129370',
   carrots: '129365',

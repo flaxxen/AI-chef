@@ -1,4 +1,4 @@
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, onMounted, computed } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import SearchModel from './model.js';
 import Navbar from './components/NavbarPresenter.jsx';
@@ -11,14 +11,20 @@ const App = defineComponent({
   
     const auth = getAuth();
     const topModel = reactive(new SearchModel([]));
+    const favoriteRecipes = computed(() => topModel.favoriteRecipes);
     updateFirebaseFromModel(topModel);
-    onAuthStateChanged(auth, async (user) => {
-      try {
-        const values = await getAllUserRecipesFromFirebase();
-        topModel.setAllFavorites(values);
-      } catch (err) {
-        topModel.setAllFavorites([]);
-      }
+
+    onMounted(async () => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const values = await getAllUserRecipesFromFirebase();
+            topModel.setAllFavorites(values);
+          } catch (err) {
+            topModel.setAllFavorites([]);
+          }
+        }
+      });
     });
 
     return function render() {

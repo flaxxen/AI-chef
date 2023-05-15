@@ -1,68 +1,38 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed, onMounted } from 'vue';
 import FavoriteView from '../views/FavoriteView';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { get, getDatabase, ref as dbRef, onValue } from "firebase/database";
 
 const Favorite = defineComponent({
   props: {
     model: {
-      Object
+      type: Object
     },
   },
 
   setup(props) {
-
-    /*
     const auth = getAuth();
-    const database = getDatabase();
-    const user = ref(null);
-    const favoriteRecipes = ref([]);
-    const isAuthenticated = ref(null);
+    const isAuthenticated = ref(false);
+    const isSearching = ref(false);
+    const favorites = computed(() => props.model.favoriteRecipes);
+    const query = ref("");
+    
     onAuthStateChanged(auth, (userAuth) => {
       isAuthenticated.value = !!userAuth
-      user.value = userAuth;
-      if (userAuth) {
-        const favoriteRef = dbRef(database, `users/${userAuth.uid}/favorites`);
-        onValue(favoriteRef, async (snapshot) => {
-          const favorites = [];
-          const promises = [];
+    }); 
 
-          snapshot.forEach((recipe) => {
-            const recipeId = recipe.key;
-            const recipeDataPromise = get(dbRef(database, `allfavorites/${recipeId}`)).then((recipeSnapshot) => {
-              const recipeData = recipeSnapshot.val();
-              if (recipeData) {
-                return {
-                  id: recipeId,
-                  title: recipeData.title,
-                  ingredients: recipeData.ingredients,
-                  instructions: recipeData.instructions
-                };
-              }
-            });
-            promises.push(recipeDataPromise);
-          });
-
-          const results = await Promise.all(promises);
-          favorites.push(...results.filter(Boolean));
-          favoriteRecipes.value = favorites;
-        });
-      } else {
-        favoriteRecipes.value = [];
-      }
-    });
-*/
-    const isSearching = ref(false);
-    const favorites = reactive(props.model.favoriteRecipes);
-    const currentlyDisplayedRecipes = favorites;
-    const query = "";
+    function getSearchResults() {
+      if (query.value == "")
+        return favorites.value;
+       
+      const searchRegex = new RegExp(query.value, 'i');
+      return props.model.favoriteRecipes.filter((recipe) => searchRegex.test(recipe.title));
+    }
 
     function search() {
-      if (query == "") {
-        currentlyDisplayedRecipes = favorites;
+      if (query.value == "") 
         isSearching.value = false;
-      }
-
+      else 
+        isSearching.value = true;
     }
 
     function removeFavorite(id) {
@@ -70,26 +40,24 @@ const Favorite = defineComponent({
     }
 
     function updateQuery(newQuery) {
-      query = newQuery;
+      query.value = newQuery;
     }
 
-
-
     return function render() {
-      if (isAuthenticated.value === null) {
-        return null;
-      }
-      else if (!isAuthenticated.value) {
+      const displayRecipes = isSearching.value ? getSearchResults() : favorites.value;
+      if (isAuthenticated.value)
+        return <FavoriteView search={search} 
+                              searching={isSearching.value} 
+                              favoriteRecipes={displayRecipes} 
+                              updateQuery={updateQuery} 
+                              removeFavorite={removeFavorite} />
+      else
         return (
           <div>
             <p>You need to <router-link to="/login">log in</router-link> first.</p>
           </div>
-        );
-      }
-      else {
-        return <FavoriteView search={search} searching={isSearching.value} favoriteRecipes={currentlyDisplayedRecipes} updateQuery={updateQuery} removeFavorite={removeFavorite} />;
-      }
-    };
+        )
+    }
   },
 });
 
