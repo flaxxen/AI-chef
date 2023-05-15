@@ -14,7 +14,10 @@ const Recipe = defineComponent({
 
   setup( props ) {
     const isAuthenticated = ref(false);
-    const router = useRouter();  
+    const auth = getAuth();
+    const router = useRouter();
+    const database = getDatabase();
+    const user = auth.currentUser;
 
     onAuthStateChanged(auth, (user) => {
       isAuthenticated.value = !!user
@@ -22,13 +25,13 @@ const Recipe = defineComponent({
 
     function addToFavorites() {
       /* If the user hasn't logged in, route to the login page. */
-      const auth = getAuth().currentUser;
-      if (!auth) {
+      if (!isAuthenticated.value) {
         router.push('/login');
         return;
       }
 
       props.model.addCurrentRecipeToFavorites();
+      return;
     };
 
       return function render() {

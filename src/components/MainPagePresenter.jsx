@@ -10,7 +10,6 @@ const MainPage = defineComponent({
   },
 
   setup( props ) {
-    console.log(props.model.favoriteRecipes);
     const model = reactive( props.model );
 
     function searchForRecipe() {
