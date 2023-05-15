@@ -1,61 +1,54 @@
-import { defineComponent} from "vue"; 
-import { RouterLink } from 'vue-router'
+import { defineComponent, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import '/src/assets/navbar.css';
-import AiChefLogo from '../assets/chef.png';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-const NavbarView = defineComponent({
-  props: {
-    logoutFunction: {
-      type: Function,
-    },
-    user: {
-      type: Object,
-    },
-    toggleMenu: {
-      type: Function
-    },
-    open: {
-      type: Boolean,
-      default: false
-    },
-  },
+export default defineComponent({
+  name: "Navbar",
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const auth = getAuth();
+    const user = ref(null);
 
-  setup(props) {
+    onAuthStateChanged(auth, (firebaseUser) => {
+      user.value = firebaseUser;
+    });
 
-    return function render() {
-      return (
-        <nav>
-          <img class="smalllogo" src={AiChefLogo}></img>
-          
-          <div v-show={!props.open}>
-            <ul>
-              <li>
-                <RouterLink to="/">Home</RouterLink>
-              </li>
-              {this.user ? (
-                <>
-                  <li>
-                    <RouterLink to="/favorite">Favorite</RouterLink>
-                  </li>
-                  <li>
-                    <button class = "logoutButton" onClick={this.logoutFunction}>Logout</button>
-                  </li>
-                </>
+    const logout = () => {
+      signOut(auth)
+        .then(() => {
+          localStorage.removeItem("user");
+          router.push("/login");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    return () => (
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto"></ul>
+            <ul class="navbar-nav">
+              {user.value ? (
+                <li class="nav-item">
+                  <button class="btn btn-outline-danger" onClick={logout}>
+                    Logout
+                  </button>
+                </li>
               ) : (
-                <li>
-                  <RouterLink to="/login">Login</RouterLink>
+                <li class="nav-item">
+                  <router-link to="/login" class="btn btn-primary">
+                    Login
+                  </router-link>
                 </li>
               )}
             </ul>
           </div>
-          <button class="hamburgerButton" onClick={props.toggleMenu}>
-            ☰
-          </button>
-
-        </nav>
-      )
-    };
-  }
+        </div>
+      </nav>
+    );
+  },
 });
-
-export default NavbarView;
