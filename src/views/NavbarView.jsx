@@ -30,7 +30,15 @@ export default defineComponent({
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto"></ul>
+            <ul class="navbar-nav me-auto">
+              {user.value && (
+                <li class="nav-item">
+                  <router-link to="/" class="nav-link">
+                    Home
+                  </router-link>
+                </li>
+              )}
+            </ul>
             <ul class="navbar-nav">
               {user.value ? (
                 <li class="nav-item">
