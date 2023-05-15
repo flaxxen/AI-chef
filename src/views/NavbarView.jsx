@@ -6,7 +6,6 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 export default defineComponent({
   name: "Navbar",
   setup() {
-    const route = useRoute();
     const router = useRouter();
     const auth = getAuth();
     const user = ref(null);
@@ -15,15 +14,40 @@ export default defineComponent({
       user.value = firebaseUser;
     });
 
-    const logout = () => {
-      signOut(auth)
-        .then(() => {
-          localStorage.removeItem("user");
-          router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    const handleLogout = async () => {
+      try {
+        await signOut(auth);
+        localStorage.removeItem("user");
+        router.push("/login");
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+
+    const renderAuthButtons = () => {
+      if (user.value) {
+        return (
+          <>
+            <li class="nav-item">
+              <button class="btn btn-outline-danger" onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
+          </>
+        );
+      } 
+      else {
+        return (
+          <>
+            <li class="nav-item">
+              <router-link to="/login" class="btn btn-primary">
+                Login
+              </router-link>
+            </li>
+          </>
+        );
+      }
     };
 
     return () => (
@@ -32,27 +56,22 @@ export default defineComponent({
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
               {user.value && (
-                <li class="nav-item">
-                  <router-link to="/" class="nav-link">
-                    Home
-                  </router-link>
-                </li>
+                <>
+                  <li class="nav-item">
+                    <router-link to="/" class="nav-link">
+                      Home
+                    </router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/favorite" class="nav-link">
+                      Favorites
+                    </router-link>
+                  </li>
+                </>
               )}
             </ul>
             <ul class="navbar-nav">
-              {user.value ? (
-                <li class="nav-item">
-                  <button class="btn btn-outline-danger" onClick={logout}>
-                    Logout
-                  </button>
-                </li>
-              ) : (
-                <li class="nav-item">
-                  <router-link to="/login" class="btn btn-primary">
-                    Login
-                  </router-link>
-                </li>
-              )}
+              {renderAuthButtons()}
             </ul>
           </div>
         </div>
