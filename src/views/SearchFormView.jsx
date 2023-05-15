@@ -17,7 +17,6 @@ const SearchFormView = defineComponent({
   
   setup( props ) {
     function toggle(e) {
-      console.log(e.target.id);
       props.toggleIngredient(e.target.id);
     }
 
