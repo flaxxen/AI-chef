@@ -49,8 +49,9 @@ const RecipeView = defineComponent({
               </ul>
             </div>)
             : 
-            <div>
-
+            <div class="welcome">
+              <h1>Welcome to the AI Chef!</h1>
+              <h2>Customize your meal by choosing your favorite ingredients below.</h2>
             </div>)
         )
       );

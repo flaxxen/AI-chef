@@ -42,12 +42,6 @@ class SearchModel {
   addCurrentRecipeToFavorites() {
     if (this.favoriteRecipes && this.favoriteRecipes.some(r => r.id == this.recipe.id))
       return;
-/*    
-    this.favoriteRecipes = [...this.favoriteRecipes, this.recipe];
-    this.notifyObservers({addFavorite: this.favoriteRecipes[this.favoriteRecipes.length - 1], 
-      setIdCB: this.favoriteRecipes[this.favoriteRecipes.length - 1].setId, 
-      updateModel: this.update});
-*/
 
     // Create a copy of the current recipe
     const newRecipe = { ...this.recipe };
